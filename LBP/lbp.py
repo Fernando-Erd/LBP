@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import numpy as np
 import cv2
 import sys
@@ -7,9 +8,13 @@ from matplotlib import pyplot as plt
 histograma = [0 for i in range (0,256)]
 
 #Read Image
-img = cv2.imread(sys.argv[1], 0)
-line = img.shape[0]
-column = img.shape[1]
+try:
+    img = cv2.imread(sys.argv[1], 0)
+    line = img.shape[0]
+    column = img.shape[1]
+except:
+    print 'Faltou argumentos, use ./lbp.py <image>'
+    exit()
 
 #Generate matrix output
 imgOut = []
@@ -41,16 +46,17 @@ for i in range (1, line - 1):
 		imgOut[i][j] = sum
 		sum = 0
 
-#Generate histogram
+#Plot images
 x = range(0,256)
 y = histograma
-
-plt.figure(figsize=(20, 10))
-plt.subplot(121),plt.imshow(img, cmap='gray')
-plt.title('After LBP algorithm')
-plt.figure(figsize=(20, 10))
-plt.subplot(121),plt.imshow(imgOut, cmap='gray')
-plt.subplot(122),plt.plot(x,y)
-plt.title('Histogram')
-
+fig = plt.figure()
+ax1 = fig.add_subplot (2,2,1)
+ax1.set_title('Image Read in Gray Color')
+ax1.imshow(img)
+ax2 = fig.add_subplot (2,2,2)
+ax2.set_title('after LBP in Gray Color')
+ax2.imshow(imgOut)
+ax3 = fig.add_subplot(2,1,2)
+ax3.set_title ('Histogram')
+ax3.plot(x,y, 'r-')
 plt.show()
