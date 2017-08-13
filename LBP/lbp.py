@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
+#===========================================#
+#                                           #
+#   Aprendizado de Maquina - LBP filter     #
+#   Nome:  Fernando Claudecir Erd           #
+#   GRR20152936                             #
+#                                           #
+#===========================================#
+
 import numpy as np
 import cv2
 import sys
 from matplotlib import pyplot as plt
 
-histograma = [0 for i in range (0,256)]
+histogram = [0 for i in range (0,256)]
 
 #Read Image
 try:
@@ -42,13 +50,13 @@ for i in range (1, line - 1):
 			sum += 64
 		if (img[i][j] >= img[i+1][j+1]):
 			sum += 128
-		histograma[sum] = histograma[sum] + 1
+		histogram[sum] = histogram[sum] + 1
 		imgOut[i][j] = sum
 		sum = 0
 
 #Plot images
 x = range(0,256)
-y = histograma
+y = histogram
 fig = plt.figure()
 ax1 = fig.add_subplot (2,2,1)
 ax1.set_title('Image Read in Gray Color')
